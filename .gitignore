@@ -1,0 +1,38 @@
+# Secrets / credentials — NEVER commit these
+*.key
+*.pem
+.env
+.env.*
+*secret*
+*credential*
+chave*API*
+chave*.txt
+*api*key*.txt
+
+# Claude local settings (machine-specific)
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+dist/
+build/
+
+# Excel / Office temp files
+~$*.xlsx
+~$*.docx
+*.tmp
+
+# OS junk
+Thumbs.db
+Desktop.ini
+.DS_Store
