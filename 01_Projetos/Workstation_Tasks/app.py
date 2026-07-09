@@ -1,14 +1,21 @@
 """
 =====================================================
 Workstation Tasks
-Arquivo Principal da Aplicação
-Versão: 0.1.0
+Aplicação Principal
+Versão: 0.4.0
 =====================================================
 """
+
+import os
 
 from app import create_app
 
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    debug = os.getenv("FLASK_ENV", "development") == "development"
+
+    app.run(
+        debug=debug
+    )

@@ -1,32 +1,59 @@
 """
 =====================================================
+
 Workstation Tasks
+
 Modelo de Projeto
+
+Versão: 0.4.8
+
 =====================================================
+
+Modelo responsável pelos Projetos do sistema.
 """
 
 from app.extensions import db
 
 
 class Project(db.Model):
+    """
+    Modelo de Projeto.
+    """
 
     __tablename__ = "projects"
 
+    # =====================================================
+    # Campos
+    # =====================================================
+
     id = db.Column(
         db.Integer,
-        primary_key=True,
-        index=True
+        primary_key=True
     )
 
-    title = db.Column(
+    name = db.Column(
         db.String(150),
         nullable=False,
+        unique=True,
         index=True
     )
 
     description = db.Column(
         db.Text,
         nullable=True
+    )
+
+    active = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    owner_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id"),
+        nullable=False,
+        index=True
     )
 
     created_at = db.Column(
@@ -42,6 +69,16 @@ class Project(db.Model):
         nullable=False
     )
 
+    # =====================================================
+    # Relacionamentos
+    # =====================================================
+
+    owner = db.relationship(
+        "User",
+        backref="projects",
+        lazy=True
+    )
+
     tasks = db.relationship(
         "Task",
         back_populates="project",
@@ -49,14 +86,47 @@ class Project(db.Model):
         cascade="all, delete-orphan"
     )
 
-    def __repr__(self):
-        return f"<Project {self.id} - {self.title}>"
+    # =====================================================
+    # Métodos
+    # =====================================================
 
-    def to_dict(self):
+    def update(self, **kwargs) -> None:
+        """
+        Atualiza os atributos do projeto.
+        """
+
+        for key, value in kwargs.items():
+
+            if hasattr(self, key):
+
+                setattr(self, key, value)
+
+    def __repr__(self) -> str:
+        """
+        Representação textual do objeto.
+        """
+
+        return f"<Project {self.name}>"
+
+    def to_dict(self) -> dict:
+        """
+        Retorna o projeto em formato dicionário.
+        """
+
         return {
             "id": self.id,
-            "title": self.title,
+            "name": self.name,
             "description": self.description,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "active": self.active,
+            "owner_id": self.owner_id,
+            "created_at": (
+                self.created_at.isoformat()
+                if self.created_at
+                else None
+            ),
+            "updated_at": (
+                self.updated_at.isoformat()
+                if self.updated_at
+                else None
+            )
         }

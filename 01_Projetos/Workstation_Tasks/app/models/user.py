@@ -1,28 +1,39 @@
 """
 =====================================================
 Workstation Tasks
+
 Modelo de Usuário
-Versão: 0.3.0
+
+Versão: 0.4.6
+
 =====================================================
+
+Modelo responsável pelos usuários do sistema.
 """
 
 from flask_login import UserMixin
 from werkzeug.security import (
-    generate_password_hash,
-    check_password_hash
+    check_password_hash,
+    generate_password_hash
 )
 
 from app.extensions import db
 
 
 class User(UserMixin, db.Model):
+    """
+    Modelo de Usuário.
+    """
 
     __tablename__ = "users"
 
+    # =====================================================
+    # Campos
+    # =====================================================
+
     id = db.Column(
         db.Integer,
-        primary_key=True,
-        index=True
+        primary_key=True
     )
 
     name = db.Column(
@@ -69,6 +80,10 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
+    # =====================================================
+    # Relacionamentos
+    # =====================================================
+
     role = db.relationship(
         "Role",
         back_populates="users"
@@ -80,25 +95,64 @@ class User(UserMixin, db.Model):
         lazy=True
     )
 
-    def set_password(self, password):
+    # =====================================================
+    # Métodos
+    # =====================================================
+
+    def set_password(self, password: str) -> None:
+        """
+        Gera o hash da senha.
+        """
+
         self.password = generate_password_hash(password)
 
-    def check_password(self, password):
+    def check_password(self, password: str) -> bool:
+        """
+        Verifica se a senha informada é válida.
+        """
+
         return check_password_hash(
             self.password,
             password
         )
 
-    def __repr__(self):
+    def update(self, **kwargs) -> None:
+        """
+        Atualiza os atributos do objeto dinamicamente.
+        """
+
+        for key, value in kwargs.items():
+
+            if hasattr(self, key):
+
+                setattr(self, key, value)
+
+    def __repr__(self) -> str:
+        """
+        Representação textual do objeto.
+        """
+
         return f"<User {self.email}>"
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Retorna o objeto em formato dicionário.
+        """
+
         return {
             "id": self.id,
             "name": self.name,
             "email": self.email,
             "active": self.active,
             "role_id": self.role_id,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "created_at": (
+                self.created_at.isoformat()
+                if self.created_at
+                else None
+            ),
+            "updated_at": (
+                self.updated_at.isoformat()
+                if self.updated_at
+                else None
+            )
         }

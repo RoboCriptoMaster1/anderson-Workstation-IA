@@ -7,6 +7,7 @@ Versão: 0.1.0
 """
 
 from flask import Blueprint, render_template
+from flask_login import login_required
 
 # Blueprint de Projetos
 projects_bp = Blueprint(
@@ -17,7 +18,9 @@ projects_bp = Blueprint(
 
 
 @projects_bp.route("/")
+@login_required
 def index():
+    
     """
     Lista todos os projetos.
     """

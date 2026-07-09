@@ -1,21 +1,34 @@
 """
 =====================================================
+
 Workstation Tasks
+
 Modelo de Categoria
+
+Versão: 0.4.8
+
 =====================================================
+
+Modelo responsável pelas categorias do sistema.
 """
 
 from app.extensions import db
 
 
 class Category(db.Model):
+    """
+    Modelo de Categoria.
+    """
 
     __tablename__ = "categories"
 
+    # =====================================================
+    # Campos
+    # =====================================================
+
     id = db.Column(
         db.Integer,
-        primary_key=True,
-        index=True
+        primary_key=True
     )
 
     name = db.Column(
@@ -43,14 +56,55 @@ class Category(db.Model):
         nullable=False
     )
 
-    def __repr__(self):
+    # =====================================================
+    # Relacionamentos
+    # =====================================================
+
+    tasks = db.relationship(
+        "Task",
+        back_populates="category",
+        lazy=True
+    )
+
+    # =====================================================
+    # Métodos
+    # =====================================================
+
+    def update(self, **kwargs) -> None:
+        """
+        Atualiza os atributos da categoria.
+        """
+
+        for key, value in kwargs.items():
+
+            if hasattr(self, key):
+
+                setattr(self, key, value)
+
+    def __repr__(self) -> str:
+        """
+        Representação textual da categoria.
+        """
+
         return f"<Category {self.id} - {self.name}>"
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+        """
+        Retorna a categoria em formato dicionário.
+        """
+
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "created_at": (
+                self.created_at.isoformat()
+                if self.created_at
+                else None
+            ),
+            "updated_at": (
+                self.updated_at.isoformat()
+                if self.updated_at
+                else None
+            )
         }
