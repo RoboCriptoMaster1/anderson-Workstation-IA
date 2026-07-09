@@ -1,0 +1,66 @@
+# =====================================================
+# Workstation Tasks
+# .gitignore
+# =====================================================
+
+# Ambiente Virtual
+.venv/
+venv/
+env/
+
+# Variáveis de Ambiente
+.env
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Banco SQLite
+*.db
+*.sqlite3
+
+# Arquivos Temporários
+*.tmp
+*.temp
+
+# Arquivos do Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Distribuição
+build/
+dist/
+*.egg-info/
+
+# Testes
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Mypy
+.mypy_cache/
+
+# Backup
+*.bak
+*.old
+
+# Chaves e Certificados
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+
+# Arquivos de Configuração Local
+instance/

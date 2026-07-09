@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Workstation Tasks{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ==========================
+         Cabeçalho
+    =========================== -->
+
+    <header class="header">
+
+        <div class="logo">
+            <h1>🚀 Workstation Tasks</h1>
+        </div>
+
+        {% include "components/navbar.html" %}
+
+    </header>
+
+    <!-- ==========================
+         Alertas
+    =========================== -->
+
+    {% include "components/alerts.html" %}
+
+    <!-- ==========================
+         Conteúdo Principal
+    =========================== -->
+
+    <main class="container">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <!-- ==========================
+         Rodapé
+    =========================== -->
+
+    {% include "components/footer.html" %}
+
+    <!-- ==========================
+         JavaScript
+    =========================== -->
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+
+</html>

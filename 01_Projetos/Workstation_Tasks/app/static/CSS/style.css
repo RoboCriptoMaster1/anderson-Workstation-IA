@@ -1,0 +1,248 @@
+/* =====================================================
+   Workstation Tasks
+   Estilo Global
+   Versão: 0.1.0
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+
+    --primary: #0d6efd;
+    --primary-dark: #084298;
+    --success: #198754;
+    --background: #f4f7fb;
+    --white: #ffffff;
+    --text: #333333;
+    --gray: #6c757d;
+    --border: #dddddd;
+
+}
+
+body {
+
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.header {
+
+    background: var(--primary);
+    color: var(--white);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 40px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,.15);
+
+}
+
+.logo h1 {
+
+    font-size: 1.7rem;
+
+}
+
+/* ===========================
+   Menu
+=========================== */
+
+.menu {
+
+    display: flex;
+    gap: 18px;
+
+}
+
+.menu a {
+
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.menu a:hover {
+
+    color: #ffd54f;
+
+}
+
+/* ===========================
+   Conteúdo
+=========================== */
+
+.container {
+
+    width: 92%;
+    max-width: 1200px;
+
+    margin: 35px auto;
+
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.card {
+
+    background: var(--white);
+
+    border-radius: 12px;
+
+    padding: 35px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.card h2 {
+
+    color: var(--primary);
+    margin-bottom: 15px;
+
+}
+
+.card hr {
+
+    margin: 25px 0;
+    border: none;
+    border-top: 1px solid var(--border);
+
+}
+
+.card p {
+
+    line-height: 1.8;
+
+}
+
+.info {
+
+    margin-top: 20px;
+
+}
+
+.info p {
+
+    margin: 10px 0;
+
+}
+
+.info strong {
+
+    color: var(--primary);
+
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+.footer {
+
+    margin-top: 50px;
+
+    background: white;
+
+    text-align: center;
+
+    padding: 20px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--gray);
+
+}
+
+/* ===========================
+   Botões
+=========================== */
+
+.btn {
+
+    display: inline-block;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+.btn:hover {
+
+    background: var(--primary-dark);
+
+}
+
+/* ===========================
+   Responsividade
+=========================== */
+
+@media (max-width: 900px) {
+
+    .header {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        text-align: center;
+
+    }
+
+    .menu {
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .container {
+
+        width: 96%;
+
+    }
+
+    .card {
+
+        padding: 20px;
+
+    }
+
+    .logo h1 {
+
+        font-size: 1.4rem;
+
+    }
+
+}
