@@ -1347,10 +1347,18 @@ Ano:
 
 2026
 
+Versão da Plataforma:
+
+1.0
+
 Versão deste documento:
 
 2.0
 
-Status:
+Status da Plataforma:
+
+Fase 1 concluída ✅
+
+Status deste documento:
 
 Oficial
