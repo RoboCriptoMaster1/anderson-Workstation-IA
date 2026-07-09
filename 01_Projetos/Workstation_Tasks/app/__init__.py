@@ -1,14 +1,23 @@
 """
 =====================================================
 Workstation Tasks
-Configuração Principal da Aplicação
-Versão: 0.1.0
+Application Factory
+Versão: 0.3.1
 =====================================================
 """
 
 from flask import Flask
 
-# Importação centralizada dos Blueprints
+from app.config import Config
+
+from app.extensions import (
+    init_extensions,
+)
+
+# Importa todos os Models
+from app.models import *
+
+# Importa os Blueprints
 from app.routes import (
     main_bp,
     auth_bp,
@@ -19,7 +28,7 @@ from app.routes import (
 )
 
 
-def create_app():
+def create_app() -> Flask:
     """
     Cria e configura a aplicação Flask.
     """
@@ -27,10 +36,16 @@ def create_app():
     app = Flask(__name__)
 
     # =====================================================
-    # Configurações Básicas
+    # Configurações
     # =====================================================
 
-    app.config["SECRET_KEY"] = "workstation_tasks_dev"
+    app.config.from_object(Config)
+
+    # =====================================================
+    # Inicializa as Extensões
+    # =====================================================
+
+    init_extensions(app)
 
     # =====================================================
     # Registro dos Blueprints

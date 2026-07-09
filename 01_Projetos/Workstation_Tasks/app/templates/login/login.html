@@ -6,18 +6,50 @@ Login | Workstation Tasks
 
 {% block content %}
 
-<section class="card">
+<div class="card">
 
     <h2>🔐 Login</h2>
 
-    <p>
-        Módulo de autenticação em desenvolvimento.
-    </p>
+    <form method="POST">
 
-    <hr>
+        <div class="form-group">
 
-    <p>Em breve será possível acessar o sistema utilizando e-mail e senha.</p>
+            <label>E-mail</label>
 
-</section>
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Senha</label>
+
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+        <br>
+
+        <button
+            class="btn btn-primary"
+            type="submit">
+
+            Entrar
+
+        </button>
+
+    </form>
+
+</div>
 
 {% endblock %}
