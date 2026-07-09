@@ -1,0 +1,22 @@
+{
+    "nome": "Workstation IA",
+    "versao": "1.0",
+    "pastas": [
+        "01_Projetos",
+        "02_Agentes",
+        "03_APIs",
+        "04_Banco_Dados",
+        "05_Excel",
+        "06_Python",
+        "07_NodeJS",
+        "08_Markdown",
+        "09_Documentos",
+        "10_Templates",
+        "11_Prompts",
+        "12_Automacoes",
+        "13_MCP",
+        "14_Modelos_Locais",
+        "15_Config",
+        "99_Backup"
+    ]
+}
