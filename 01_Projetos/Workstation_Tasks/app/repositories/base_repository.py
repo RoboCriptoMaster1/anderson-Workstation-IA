@@ -1,10 +1,11 @@
 """
 =====================================================
+
 Workstation Tasks
 
 Base Repository
 
-Versão: 0.4.6
+Versão: 0.5.1
 
 =====================================================
 
@@ -12,13 +13,12 @@ Classe base para todos os repositórios da aplicação.
 
 Responsável pelas operações comuns de acesso ao banco
 de dados utilizando SQLAlchemy.
+
 """
 
 from __future__ import annotations
 
-from typing import Generic
-from typing import Type
-from typing import TypeVar
+from typing import Generic, Type, TypeVar
 
 from app.extensions import db
 
@@ -44,7 +44,7 @@ class BaseRepository(Generic[T]):
         Retorna todos os registros.
         """
 
-        return self.model.query.all()
+        return db.session.query(self.model).all()
 
     def get_by_id(self, record_id: int):
         """
@@ -61,14 +61,14 @@ class BaseRepository(Generic[T]):
         Retorna o primeiro registro.
         """
 
-        return self.model.query.first()
+        return db.session.query(self.model).first()
 
     def count(self) -> int:
         """
         Retorna a quantidade de registros.
         """
 
-        return self.model.query.count()
+        return db.session.query(self.model).count()
 
     def exists(self, record_id: int) -> bool:
         """
@@ -84,6 +84,16 @@ class BaseRepository(Generic[T]):
     def create(self, obj: T) -> T:
         """
         Persiste um novo objeto.
+        """
+
+        db.session.add(obj)
+        db.session.commit()
+
+        return obj
+
+    def save(self, obj: T) -> T:
+        """
+        Salva um objeto.
         """
 
         db.session.add(obj)
@@ -134,11 +144,27 @@ class BaseRepository(Generic[T]):
         per_page: int = 10
     ):
         """
-        Paginação padrão.
+        Paginação simples.
         """
 
-        return self.model.query.paginate(
-            page=page,
-            per_page=per_page,
-            error_out=False
-        )
+        query = db.session.query(self.model)
+
+        return query.offset(
+            (page - 1) * per_page
+        ).limit(
+            per_page
+        ).all()
+
+    def refresh(self, obj: T) -> None:
+        """
+        Atualiza um objeto com os dados do banco.
+        """
+
+        db.session.refresh(obj)
+
+    def flush(self) -> None:
+        """
+        Executa flush na sessão.
+        """
+
+        db.session.flush()

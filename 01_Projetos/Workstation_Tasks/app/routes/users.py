@@ -1,15 +1,37 @@
 """
 =====================================================
+
 Workstation Tasks
+
 Módulo de Usuários
-Versão: 0.1.0
+
+Versão: 0.5.0
+
 =====================================================
+
+Responsável pelas rotas do módulo de usuários.
+
 """
 
-from flask import Blueprint, render_template
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+    url_for,
+    flash,
+    request,
+)
+
 from flask_login import login_required
 
-# Blueprint de Usuários
+from app.forms.user_form import UserForm
+from app.services.user_service import UserService
+
+
+# =====================================================
+# Blueprint
+# =====================================================
+
 users_bp = Blueprint(
     "users",
     __name__,
@@ -17,43 +39,142 @@ users_bp = Blueprint(
 )
 
 
+# =====================================================
+# Service
+# =====================================================
+
+user_service = UserService()
+
+
+# =====================================================
+# Listagem
+# =====================================================
+
 @users_bp.route("/")
 @login_required
 def index():
-    
     """
     Lista todos os usuários.
     """
-    return render_template("users/index.html")
+
+    users = user_service.get_all()
+
+    return render_template(
+        "users/index.html",
+        users=users
+    )
 
 
-@users_bp.route("/new")
+# =====================================================
+# Novo Usuário
+# =====================================================
+
+@users_bp.route("/new", methods=["GET", "POST"])
+@login_required
 def new():
     """
-    Formulário para novo usuário.
+    Cadastro de usuário.
     """
-    return "<h2>Novo Usuário (Em desenvolvimento)</h2>"
+
+    form = UserForm()
+
+    if form.validate_on_submit():
+
+        flash(
+            "Cadastro de usuários será implementado na Sprint 0.5.0.",
+            "info"
+        )
+
+        return redirect(url_for("users.index"))
+
+    return render_template(
+        "users/new.html",
+        form=form
+    )
 
 
-@users_bp.route("/profile/<int:id>")
-def profile(id):
+# =====================================================
+# Perfil
+# =====================================================
+
+@users_bp.route("/profile/<int:user_id>")
+@login_required
+def profile(user_id):
     """
-    Perfil do usuário.
+    Exibe o perfil do usuário.
     """
-    return f"<h2>Perfil do Usuário #{id} (Em desenvolvimento)</h2>"
+
+    user = user_service.get_by_id(user_id)
+
+    if user is None:
+
+        flash(
+            "Usuário não encontrado.",
+            "danger"
+        )
+
+        return redirect(url_for("users.index"))
+
+    return render_template(
+        "users/profile.html",
+        user=user
+    )
 
 
-@users_bp.route("/edit/<int:id>")
-def edit(id):
+# =====================================================
+# Editar
+# =====================================================
+
+@users_bp.route("/edit/<int:user_id>", methods=["GET", "POST"])
+@login_required
+def edit(user_id):
     """
-    Editar usuário.
+    Edita um usuário.
     """
-    return f"<h2>Editando Usuário #{id} (Em desenvolvimento)</h2>"
+
+    user = user_service.get_by_id(user_id)
+
+    if user is None:
+
+        flash(
+            "Usuário não encontrado.",
+            "danger"
+        )
+
+        return redirect(url_for("users.index"))
+
+    form = UserForm(obj=user)
+
+    if form.validate_on_submit():
+
+        flash(
+            "Edição será implementada na Sprint 0.5.0.",
+            "info"
+        )
+
+        return redirect(url_for("users.profile", user_id=user.id))
+
+    return render_template(
+        "users/edit.html",
+        form=form,
+        user=user
+    )
 
 
-@users_bp.route("/delete/<int:id>")
-def delete(id):
+# =====================================================
+# Excluir
+# =====================================================
+
+@users_bp.route("/delete/<int:user_id>", methods=["POST"])
+@login_required
+def delete(user_id):
     """
-    Excluir usuário.
+    Exclui um usuário.
     """
-    return f"<h2>Excluindo Usuário #{id} (Em desenvolvimento)</h2>"
+
+    flash(
+        "Exclusão será implementada na Sprint 0.5.0.",
+        "warning"
+    )
+
+    return redirect(url_for("users.index"))
