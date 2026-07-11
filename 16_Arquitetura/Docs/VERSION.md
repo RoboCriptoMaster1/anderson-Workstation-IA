@@ -28,7 +28,7 @@ Genesis
 
 ## Status
 
-Em Desenvolvimento
+Biblioteca Base Concluída
 
 ---
 
